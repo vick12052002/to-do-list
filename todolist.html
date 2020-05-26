@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,13 +9,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="checkbox/CssCheckboxKit_1590116656632732/style.css">
+    <link rel="stylesheet" href="/jQuery/jquery-3.5.1.min.js">
+    <link rel="stylesheet" href="/checkbox/CssCheckboxKit_1590116656632732/style.css">
+    </style>
     <title>To Do List</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    </style>
     <style>
         * {
             margin: 0 auto;
             padding: 0 0;
             list-style: none;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .title {
@@ -24,6 +30,10 @@
 
         .subtitle {
             font-size: 20px;
+        }
+
+        .container {
+            padding: 0 0;
         }
 
         input {
@@ -46,76 +56,199 @@
             border-bottom: #00408B 5px solid;
         }
 
-        .add-task {
-            max-width: 620px;
+        .add-task-head {
+            font-size: 28px;
+            color: #c8c8c8;
+            padding: 18px 0 18px 23px;
+            margin-top: 24px;
+            background-color: #F2F2F2;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .add-task-head:hover {
+            border: #c8c8c8 2px solid;
+            /* box-sizing: border-box; */
+        }
+
+        .add-task-form {
+            max-width: 100%;
+            padding: 0 0;
             margin-top: 22px;
             background-color: #F2F2F2;
             border: 1px solid #C8C8C8;
             position: relative;
+
         }
+
         .add-task-title {
             padding: 24px 32px 18px;
+            margin: auto;
+            border: 1px solid #C8C8C8;
+            border-bottom: 3px solid #C8C8C8;
+            position: relative;
         }
+
         .add-task-title input {
             background-color: #F2F2F2;
         }
-        .add-task-title-icon{
+
+        .add-task-title-icon {
             font-size: 20px;
             position: absolute;
             right: 24px;
-            top:24px;
+            top: 24px;
         }
 
-        .add-task-item{
+        .pen-edit {
+            color: blue;
+        }
+
+        .star-bg {
+            background-color: #FFF2DC;
+        }
+
+
+
+        .add-task-item {
             padding: 25px 0 0 72px;
         }
 
-        .add-task-title:after {
-            content: " ";
-            position: absolute;
-            height: 3px;
-            width: 589px;
-            left: 0px;
-            top: 76px;
-        
-            margin: auto;
-            background-color: #c8c8c8;
-        }  
-
-        .add-task-item label{
+        .add-task-item label {
             margin-top: .5rem;
         }
-        
+
 
         .add-task-item-file .add-file {
             width: 80px;
             height: 32px;
             background-color: #c8c8c8;
-            
-            
+
         }
 
         .add-file:after {
-            content:"選擇檔案";
+            content: "選擇檔案";
             font-size: 16px;
-            color:black;
+            color: black;
             position: absolute;
-            top: 213px;
+            top: 216px;
             left: 80px;
-            cursor:pointer;
+            cursor: pointer;
         }
-         
-        .add-task-save{
-            max-width:590px ;
-            margin: 0 0;
 
+        .add-task-save {
+            max-width: 620px;
+            margin: 16px 0 0;
+
+        }
+
+        .to-do-item {
+            margin: 24px auto;
+            max-width: 620px;
+            padding: 0 0;
+            background-color: #F2F2F2;
+        }
+
+        .icon-list {
+            color: #9D9E9F;
+            float: left;
+            margin: 0 24px;
+            padding-left: 70px;
+        }
+
+        .icon-list i {
+            padding-right: 10px;
+        }
+
+        .decoration {
+            text-decoration: line-through;
+            color: gray;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
     <script>
+        function mySubmitFunction(e) {
+            e.preventDefault();
+            return false;
+        };
+        // if (typeof (Storage) !== "undefined") {
+        //     // Store
+        //     // localStorage.setItem("lastname", "Smith");
+
         $(document).ready(function () {
-        
+            var checkbox = $("input[type='checkbox']")
+            var doingTask = []
+            var completed = [];
+
+            $(".add-task-form").hide();
+            $(".add-task-head").click(function () {
+                $(".add-task-form").toggle()
+            });
+
+            $(".css-checkbox").each(function () {
+                $(this).click(function () {
+                    if (checkbox.prop("checked") === true) {
+                        $(this).closest("input[type='text']").toggleClass("decoration")
+
+                    }
+                })
+                
+            });
+
+            $(".icon-star").on("click", function () {
+                $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
+                $(this).parents(".add-task-title ").toggleClass("star-bg");
+            })
+            $(".icon-pen").on("click", function () {
+                $(".icon-pen").toggleClass("text-primary")
+                $(this).parents(".add-task-form").children(".add-task-item ,.add-task-save").toggle();
+
+            })
+
+            $("#save-task").on("click", function () {
+                var inputValue = $(".input-value").val();
+                var inputValueCopy = $(".input-value").clone();
+                var inputDate = $("input[type='date']").val();
+                var inputComment = $("textarea").val();
+
+                doingTask.push(inputValue);
 
 
+
+
+                $(".to-do-list-item").append(
+                    `<li class="to-do-item ">
+                    <div class="add-task-title row ">
+                    <div class="add-task-title-input col-10">
+                        <input type="checkbox" name="checkbox1" class="css-checkbox" />
+                        <label for="checkbox1" class="css-label"><strong><p>
+                            
+                            ${inputValue}</p></strong></label>
+                    </div>
+                    <div class="add-task-title-icon col-2">
+                        <label class="far fa-star icon-star  " style="padding-right: 10px;cursor:pointer;"></label>
+                        <label class="fas fa-pen icon-pen" style="cursor:pointer;"></label>
+                    </div>
+                    <div class="icon-list col ">
+                    </div>
+                </div></li>`
+                )
+                if (inputDate !== "") {
+                    $(".icon-list").append(
+                        `<i class="far fa-calendar-alt">
+                            <span>${inputDate}</span>
+                        </i>`)
+                }
+                if (inputComment !== "") {
+                    $(".icon-list").append(
+                        `<i class="far fa-comment-dots">
+                            
+                        </i>`)
+                }
+
+            });
         });    </script>
     <script src="https://kit.fontawesome.com/ea207a6ef9.js" crossorigin="anonymous"></script>
 </head>
@@ -126,71 +259,97 @@
     <header>
         <div class="container  text-decoration-none " style="height: 76px ; max-width: 660px; line-height: 71px;">
             <div class="row justify-content-center  text-center h-100 align-middle   ">
-                <a id="myTasks" href="#" class="col text-decoration-none">My Task</a>
-                <a id="inProgress" href="#" class="col text-decoration-none">In Progress</a>
-                <a id="completed" href="#" class="col text-decoration-none">Completed</a>
+                <a id="myTasks" href="" class="col text-decoration-none">My Task</a>
+                <a id="inProgress" href="#progress" class="col text-decoration-none">In Progress</a>
+                <a id="completed" href="#completed" class="col text-decoration-none">Completed</a>
 
             </div>
 
         </div>
     </header>
     <main id="to-do-list" class="to-do-list container w-100" style="max-width: 620px;">
-        <form class="add-task border rounded text-decoration-none ">
-            <div class="add-task-title row ">
-                <div class="add-task-title-input col-10">
-                   
+        <div class="add-task-head  w-100 ">
+            <i class="fas fa-plus ">Add Task </i>
+        </div>
 
-                    <input type="checkbox" name="checkboxG4" id="checkboxG4" class="css-checkbox" />
-					<label for="checkboxG4" class="css-label"><strong><input type="text" name="" id="" class="title" value="Type Something Here"></strong></label>
+        <form class="add-task-form border rounded text-decoration-none" id="add-task-form
+        " onsubmit="return mySubmitFunction(event)">
+            <div class="add-task-title row "></span>
+                <div class="add-task-title-input col-10">
+                    <input type="checkbox" name="checkbox" class="css-checkbox" />
+                    <label for="checkbox" class="css-label "><strong><input type="text" name=""
+                                class="title input-value" value="Type Something Here"></strong></label>
 
                 </div>
-                
+
                 <div class="add-task-title-icon col-2">
-                    <label class="far fa-star icon-star solid text-warning " style="padding-right: 10px;cursor:pointer;"></label>
+                    <label class="far fa-star icon-star  " style="padding-right: 10px;cursor:pointer;"></label>
                     <label class="fas fa-pen icon-pen" style="cursor:pointer;"></label>
                 </div>
             </div>
             </div>
-            <div class="add-task-item" id="add-task-item">
+            <div class="add-task-item">
                 <div class="add-task-item-time">
                     <label for="Deadline subtitle ">
                         <i class="far fa-calendar-alt "></i>
                         <b>Deadline</b>
                     </label>
                     <br>
-                    <input type="date" class="Deadline " id="" placeholder="yyyy/mm/dd">
-                    <input type="time" class="Deadline " placeholder="hh/mm">
+                    <input type="date" class="Deadline " placeholder="yyyy/mm/dd">
+
+                    <div class="add-task-item-file">
+                        <label for="add-file subtitle ">
+                            <i class="far fa-file"></i>
+                            <b>File</b>
+                        </label>
+                        <br>
+                        <button class="add-file"><input type="file" class="file " style="opacity :0;">
+                        </button>
+                    </div>
+                    <div class="add-task-item-comment">
+                        <label for="add-comment subtitle ">
+                            <i class="far fa-comment-dots"></i>
+                            <b>Comment</b>
+                        </label>
+                        <br>
+                        <textarea name="add-comment-input" id="" class="form-control" cols="20" rows="3"
+                            placeholder="Type your memo here..."></textarea>
+
+                    </div>
+
                 </div>
-                <div class="add-task-item-file">
-                    <label for="add-file subtitle ">
-                        <i class="far fa-file"></i>
-                        <b>File</b>
-                    </label>
-                    <br>
-                    <button class="add-file"><input type="file" class="file " id="" style="opacity :0;">
-                    </button>
-                </div>
-                <div class="add-task-item-comment">
-                    <label for="add-comment subtitle ">
-                        <i class="far fa-file"></i>
-                        <b>Comment</b>
-                    </label>
-                    <br>
-                    <textarea name="add-comment-input " id="" class="form-control" cols="20" rows="3" placeholder="Type your memo here..."></textarea>
-                    </button>
-                </div>
+
             </div>
             <div class="add-task-save row">
-                <button id="cancel-task" class="col-6 btn btn-light text-danger">NO	&nbsp;Cancel</button>
-                <button id="save-task" class="col-6 btn btn-primary">+ &nbsp;Save</button>
+                <button id="cancel-task" class="col-6 btn btn-light text-danger">NO &nbsp;Cancel</button>
+                <button id="save-task" class="col-6 btn btn-primary ">+ &nbsp;Save</button>
             </div>
-
-    </div>
-            
-  
-
         </form>
 
+        <ul class="to-do-list-item container">
+            <li class="to-do-item ">
+                <div class="add-task-title row "></span>
+                    <div class="add-task-title-input col-10">
+                        <input type="checkbox" name="checkbox1" id="checkbox1" class="css-checkbox" />
+                        <label for="checkbox1" class="css-label"><strong>
+                                <input type="text" name="" id="input-value" class="title"
+                                    value="wash all dishes"></strong></label>
+                    </div>
+                    <div class="add-task-title-icon col-2">
+                        <label class="far fa-star icon-star  " style="padding-right: 10px;cursor:pointer;"></label>
+                        <label class="fas fa-pen icon-pen" style="cursor:pointer;"></label>
+                    </div>
+                    <div class="icon-list col-4 ">
+                        <i class="far fa-calendar-alt">
+                            <span class="input-date"></span>
+                        </i>
+                        <i class="far fa-file"></i>
+                        <i class="far fa-comment-dots"></i>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
 
     </main>
 
@@ -206,9 +365,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>

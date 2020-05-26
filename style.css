@@ -1,0 +1,135 @@
+* {
+    margin: 0 auto;
+    padding: 0 0;
+    list-style: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.title {
+    font-size: 24px;
+}
+
+.subtitle {
+    font-size: 20px;
+}
+
+.container {
+    padding: 0 0;
+}
+
+input {
+    border: none;
+}
+
+header {
+    background-color: #4a90e2;
+    /* height: 76px; */
+    font-size: 24px;
+}
+
+header a {
+    color: #00408b;
+    box-sizing: border-box;
+}
+
+header a:hover {
+    color: white;
+    border-bottom: #00408B 5px solid;
+}
+
+.add-task-head {
+    font-size: 28px;
+    color: #c8c8c8;
+    padding: 18px 0 18px 23px;
+    margin-top: 24px;
+    background-color: #F2F2F2;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.add-task-head:hover {
+    border: #c8c8c8 2px solid;
+    /* box-sizing: border-box; */
+}
+
+.add-task-form {
+    max-width: 100%;
+    padding: 0 0;
+    margin-top: 22px;
+    background-color: #F2F2F2;
+    border: 1px solid #C8C8C8;
+    position: relative;
+}
+
+.add-task-title {
+    padding: 24px 32px 18px;
+    margin: auto;
+    border: 1px solid #C8C8C8;
+    border-bottom: 3px solid #C8C8C8;
+    position: relative;
+}
+
+.add-task-title input {
+    background-color: #F2F2F2;
+}
+
+.add-task-title-icon {
+    font-size: 20px;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+}
+
+.pen-edit {
+    color: blue;
+}
+
+.add-task-item {
+    padding: 25px 0 0 72px;
+}
+
+.add-task-item label {
+    margin-top: .5rem;
+}
+
+
+.add-task-item-file .add-file {
+    width: 80px;
+    height: 32px;
+    background-color: #c8c8c8;
+
+}
+
+.add-file:after {
+    content: "選擇檔案";
+    font-size: 16px;
+    color: black;
+    position: absolute;
+    top: 216px;
+    left: 80px;
+    cursor: pointer;
+}
+
+.add-task-save {
+    max-width: 620px;
+    margin: 16px 0 0;
+
+}
+
+.to-do-item {
+    margin: 24px auto;
+    max-width: 620px;
+    padding: 0 0;
+    background-color: #F2F2F2;
+}
+
+.icon-list {
+    color: #9D9E9F;
+    float: left;
+    margin: 0 24px;
+    padding-left: 70px;
+}
+
+.icon-list i {
+    padding-right: 10px;
+}
