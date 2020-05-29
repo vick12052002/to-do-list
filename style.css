@@ -79,9 +79,15 @@ header a:hover {
     right: 24px;
     top: 24px;
 }
-
+.icon{
+    cursor: pointer;
+}
 .pen-edit {
     color: blue;
+}
+
+.star-bg {
+    background-color: #FFF2DC;
 }
 
 .add-task-item {
@@ -93,27 +99,22 @@ header a:hover {
 }
 
 
-.add-task-item-file .add-file {
+.file-span {
+    padding-left: 8px;
+    font-size: 16px;
+    line-height: 32px;
     width: 80px;
     height: 32px;
-    background-color: #c8c8c8;
-
-}
-
-.add-file:after {
-    content: "選擇檔案";
-    font-size: 16px;
-    color: black;
+    background-color: #C8C8C8;
     position: absolute;
-    top: 216px;
-    left: 80px;
+    top: 208px;
+    left: 72px;
     cursor: pointer;
 }
 
 .add-task-save {
     max-width: 620px;
     margin: 16px 0 0;
-
 }
 
 .to-do-item {
@@ -132,4 +133,48 @@ header a:hover {
 
 .icon-list i {
     padding-right: 10px;
+}
+
+.decoration {
+    text-decoration: line-through;
+    color: gray;
+}
+
+input[type=checkbox].css-checkbox {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+input[type=checkbox].css-checkbox+label.css-label {
+    padding-left: 30px;
+    height: 25px;
+    display: inline-block;
+    line-height: 25px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type=checkbox].css-checkbox:checked+label.css-label {
+    background-position: 0 -25px;
+}
+
+label.css-label {
+    background-image: url(http://csscheckbox.com/checkboxes/u/csscheckbox_391ce065f36b1460c4845fa9b5173fba.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

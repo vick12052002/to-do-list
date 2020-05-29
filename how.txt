@@ -1,0 +1,17 @@
+1. 用變數存每個todo task 每個 task 都要有 id 第一個 task id 是 1 第二個是 2 以此類推（做法）
+2. 每次輸入完以後按下 save 會存一個 物件進 task array 裡面，物件裡面要有 id, title, file, comment
+3. 檢查新增的物的 id 在網頁上有沒有 沒有的話 append 到網頁
+sx
+
+最後再新增append
+[
+    {id: 1, title: '吃酥雞',file: 'xxx',comment: 'wee'},
+
+    {id:2 , title: '洗碗',file: 'xxx', comment: 'wee', ,},
+
+    {...}
+]
+
+<task data-id="1">...<task>
+<task data-id="2">...<task>
+<task data-id="3">...<task>
