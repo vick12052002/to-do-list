@@ -39,7 +39,6 @@
         function getlist() {
             let arrayJson = JSON.parse(localStorage.getItem("item"));
             if (arrayJson.length !== 0) {
-
                 for (var i = 0; i < arrayJson.length; i++) {
                     getData = arrayJson[i];
                     $(".to-do-list-item").append(`<li class="to-do-item" data-id="${getData['id']}" >
@@ -115,18 +114,23 @@
             else {
                 $(item).children(".add-task-item , .add-task-save").toggle();
             };
+            // $("#save-task").on("click", function () {
+            //     var newArray = arrayJson.filter(id=>myId)
+            //     console.log(newArray);
+            // });
 
+            // 按儲存後,將原本的 item 切掉, push 更新版到 array ,在轉換成字串存進localStorege
         };
         $(document).ready(function () {
-            getlist();
             $("button").click((e) => { e.preventDefault() });
+            getlist();
             $(".add-task-form").hide();
             $(".add-task-head").click(function () {
                 $(".add-task-form").toggle()
             });
 
             $("#save-task").on("click", function () {
-                var title = $(".title").val();
+                var title = $("input[type='text']").val();
                 var date = $("input[type='date']").val();
                 var file = $("input[type='file']").get(0).files.length;
                 var comment = $("textarea").val();
@@ -183,7 +187,6 @@
                 }
 
             });
-
             $("#cancel-task").click(() => {
                 $(".add-task-form").hide("slow");
             })
@@ -195,13 +198,12 @@
                 $(item).children(".add-task-title").children(".icon-list").toggle();
                 $(this).toggleClass("text-primary");
                 $(this).parents(".add-task-form").children(".add-task-item ,.add-task-save").toggle();
-            })
+            });
+
             $(".icon-star").on("click", function () {
                 $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
                 $(this).parents(".add-task-title").toggleClass("star-bg");
-
                 $(this).parents(".add-task-title-icon").siblings(".add-task-title-input").children(".css-label").children(".title").toggleClass("title-color").toggleClass("star-bg");
-
             })
         });
     </script>
@@ -227,8 +229,8 @@
                 <div class="add-task-title-input col-10">
                     <input type="checkbox" name="checkbox" class="css-checkbox" />
                     <label for="" class="css-label ">
-                        <input type="text" name="title" class="title title-color"
-                                placeholder="Type Something Here"></label>
+                        <input type="text" name="title" class="title title-color" id="title"
+                            placeholder="Type Something Here"></label>
                 </div>
                 <div class="add-task-title-icon col-2">
                     <label class="far fa-star icon-star" style="padding-right: 10px;cursor:pointer;"></label>
