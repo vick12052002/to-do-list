@@ -46,7 +46,7 @@
                     <div class="add-task-title row ">
                     <div class="add-task-title-input col-10">
                         <input type="checkbox" name="checkbox" class="css-checkbox" id="${getData['id']}"/>
-                        <label for="${getData['id']}" class="css-label"><strong><input type="text" name="${getData['title']}" value="${getData['title']}"></strong></label>
+                        <label for="${getData['id']}" class="css-label"><input type="text" name="${getData['title']}" value="${getData['title']}" class="title title-color"></label>
                     </div>
                     <div class="add-task-title-icon col-2">
                         <label class="far fa-star icon-star icon" style="padding-right: 10px"></label>
@@ -74,6 +74,49 @@
                 };
             }
         }
+        function editItem(myId, item) {
+            let arrayJson = JSON.parse(localStorage.getItem("item"));
+            if (item.hasClass("editing") !== true) {
+                $(item).addClass("editing").append(
+                    `<div class="add-task-item flex-column ">
+                <div class="add-task-item-time ">
+                    <label for="Deadline subtitle ">
+                        <i class="far fa-calendar-alt "></i>
+                        <b>Deadline</b>
+                    </label>
+                    <br>
+                    <input type="date" name="date" class="Deadline " value="${arrayJson[myId].date}">
+                </div>
+                <div class="add-task-item-file ">
+                    <label for="add-file subtitle ">
+                        <i class="far fa-file"></i>
+                        <b>File</b>
+                    </label>
+                    <br>
+                    <span class="add-file r">
+                        <input type="file" name="file" class="file" style="opacity :0.7;">
+                        <span class="file-span">選擇檔案</span>
+                    </span>
+                </div>
+                <div class="add-task-item-comment ">
+                    <label for="add-comment subtitle ">
+                        <i class="far fa-comment-dots"></i>
+                        <b>Comment</b>
+                    </label>
+                    <br>
+                    <textarea name="comment" class="form-control" cols="20" rows="3">${arrayJson[myId].comment}</textarea>
+                </div>
+            </div>
+            <div class="add-task-save row">
+                <button id="cancel-task" class="col-6 btn btn-light text-danger">NO &nbsp;Cancel</button>
+                <button id="save-task" class="col-6 btn btn-primary">+ &nbsp;Save</button>
+            </div>`);
+            }
+            else {
+                $(item).children(".add-task-item , .add-task-save").toggle();
+            };
+
+        };
         $(document).ready(function () {
             getlist();
             $("button").click((e) => { e.preventDefault() });
@@ -93,8 +136,8 @@
                     file: file,
                     comment: comment,
                 };
-                var id = toDoList.length + 1;
-                dataObj["id"] = toDoList.length + 1;
+                var id = toDoList.length;
+                dataObj["id"] = toDoList.length;
                 var icon = "icon" + id;
                 dataObj["icon"] = "icon" + id;
                 toDoList.push(dataObj);
@@ -110,7 +153,7 @@
                     <div class="add-task-title row ">
                     <div class="add-task-title-input col-10">
                         <input type="checkbox" name="checkbox" class="css-checkbox" id="${id}"/>
-                        <label for="${id}" class="css-label"><strong><input type="text" name="${title}" value="${title}"></strong></label>
+                        <label for="${id}" class="css-label"><input type="text" name="${title}" value="${title}" class="title title-color"></label>
                     </div>
                     <div class="add-task-title-icon col-2">
                         <label class="far fa-star icon-star icon" style="padding-right: 10px"></label>
@@ -145,12 +188,20 @@
                 $(".add-task-form").hide("slow");
             })
             $(".icon-pen").on("click", function () {
-                $(".icon-pen").toggleClass("text-primary")
+                var item = $(this).parents(".to-do-item");
+                var myId = item.attr('data-id');
+                console.log(myId);
+                editItem(myId, item);
+                $(item).children(".add-task-title").children(".icon-list").toggle();
+                $(this).toggleClass("text-primary");
                 $(this).parents(".add-task-form").children(".add-task-item ,.add-task-save").toggle();
             })
             $(".icon-star").on("click", function () {
                 $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
-                $(this).parents(".add-task-title ").toggleClass("star-bg");
+                $(this).parents(".add-task-title").toggleClass("star-bg");
+
+                $(this).parents(".add-task-title-icon").siblings(".add-task-title-input").children(".css-label").children(".title").toggleClass("title-color").toggleClass("star-bg");
+
             })
         });
     </script>
@@ -170,15 +221,14 @@
         <div class="add-task-head  w-100 ">
             <i class="fas fa-plus ">Add Task </i>
         </div>
-
         <form class="add-task-form border rounded text-decoration-none" id="add-task-form
         " onsubmit="mySubmitFunction(e)">
             <div class="add-task-title row ">
                 <div class="add-task-title-input col-10">
                     <input type="checkbox" name="checkbox" class="css-checkbox" />
                     <label for="" class="css-label ">
-                        <strong><input type="text" name="title" class="title"
-                                placeholder="Type Something Here"></strong></label>
+                        <input type="text" name="title" class="title title-color"
+                                placeholder="Type Something Here"></label>
                 </div>
                 <div class="add-task-title-icon col-2">
                     <label class="far fa-star icon-star" style="padding-right: 10px;cursor:pointer;"></label>
@@ -220,28 +270,7 @@
                 <button id="save-task" class="col-6 btn btn-primary">+ &nbsp;Save</button>
             </div>
         </form>
-
         <ul class="to-do-list-item container">
-            <li class="to-do-item ">
-                <div class="add-task-title row "></span>
-                    <div class="add-task-title-input col-10">
-                        <input type="checkbox" name="checkbox1" class="css-checkbox" id="0" />
-                        <label for="0" class="css-label"><strong>
-                                <input type="text" name="" value="wash all dishes"></strong></label>
-                    </div>
-                    <div class="add-task-title-icon col-2">
-                        <label class="far fa-star icon-star " style="padding-right: 10px;cursor:pointer;"></label>
-                        <label class="fas fa-pen icon-pen" style="cursor:pointer;"></label>
-                    </div>
-                    <div class="icon-list col ">
-                        <i class="far fa-calendar-alt">
-                            <span class="input-date"></span>
-                        </i>
-                        <i class="far fa-file"></i>
-                        <i class="far fa-comment-dots"></i>
-                    </div>
-                </div>
-            </li>
         </ul>
 
     </main>

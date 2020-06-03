@@ -5,8 +5,9 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-.title {
-    font-size: 24px;
+.title-color {
+    font-size: 25px;
+    background-color: #F2F2F2;
 }
 
 .subtitle {
@@ -45,11 +46,12 @@ header a:hover {
     background-color: #F2F2F2;
     cursor: pointer;
     box-sizing: border-box;
+    border-radius: 5px;
 }
 
 .add-task-head:hover {
     border: #c8c8c8 2px solid;
-    /* box-sizing: border-box; */
+    margin-bottom: -4px;
 }
 
 .add-task-form {
@@ -64,13 +66,14 @@ header a:hover {
 .add-task-title {
     padding: 24px 32px 18px;
     margin: auto;
+    position: relative;
     border: 1px solid #C8C8C8;
     border-bottom: 3px solid #C8C8C8;
-    position: relative;
 }
 
-.add-task-title input {
-    background-color: #F2F2F2;
+.title-border {
+    border: 1px solid #C8C8C8;
+    border-bottom: 3px solid #C8C8C8;
 }
 
 .add-task-title-icon {
@@ -79,9 +82,11 @@ header a:hover {
     right: 24px;
     top: 24px;
 }
-.icon{
+
+.icon {
     cursor: pointer;
 }
+
 .pen-edit {
     color: blue;
 }
@@ -97,7 +102,6 @@ header a:hover {
 .add-task-item label {
     margin-top: .5rem;
 }
-
 
 .file-span {
     padding-left: 8px;
@@ -122,13 +126,15 @@ header a:hover {
     max-width: 620px;
     padding: 0 0;
     background-color: #F2F2F2;
+    border-radius: 5px;
+    position: relative;
 }
 
 .icon-list {
     color: #9D9E9F;
     float: left;
-    margin: 0 24px;
-    padding-left: 70px;
+    /* margin: 0 24px; */
+    padding-left: 85px;
 }
 
 .icon-list i {
@@ -157,7 +163,7 @@ input[type=checkbox].css-checkbox+label.css-label {
     padding-left: 30px;
     height: 25px;
     display: inline-block;
-    line-height: 25px;
+    line-height: 28px;
     background-repeat: no-repeat;
     background-position: 0 0;
     font-size: 25px;
