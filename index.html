@@ -115,7 +115,13 @@
             else {
                 $(item).children(".add-task-item , .add-task-save").toggle();
             };
-
+            $(document).on ("click",".cancle",function(){
+                var item = $(this).parents(".to-do-item");
+                $(item).find(".add-task-item, .add-task-save").hide()
+                $(item).find(".icon-list").show();
+                $(item).children(".add-task-title").removeClass("title-border");
+                $(item).find(".icon-pen").removeClass("text-primary");
+            });
             $(document).on("click", ".save", function () {
                 var item = $(this).parents(".to-do-item");
                 var updateObj = {
@@ -136,12 +142,13 @@
                 $(item).find(".icon-list").show();
                 $(item).children(".add-task-title").removeClass("title-border");
                 $(item).find(".icon-pen").removeClass("text-primary");
+
             })
         };
         $(document).ready(function () {
             $("button").click((e) => { e.preventDefault() });
             getlist();
-            $(".add-task-form").hide();
+            // $(".add-task-form").hide();
             $(".add-task-head").click(function () {
                 $(".add-task-form").toggle()
             });
@@ -241,7 +248,7 @@
         </div>
         <form class="add-task-form border rounded text-decoration-none" id="add-task-form
         " onsubmit="mySubmitFunction(e)">
-            <div class="add-task-title row ">
+            <div class="add-task-title title-border row  ">
                 <div class="add-task-title-input col-10">
                     <input type="checkbox" name="checkbox" class="css-checkbox" />
                     <label for="" class="css-label ">
@@ -250,7 +257,7 @@
                 </div>
                 <div class="add-task-title-icon col-2">
                     <label class="far fa-star icon-star" style="padding-right: 10px;cursor:pointer;"></label>
-                    <label class="fas fa-pen icon-pen" style="cursor:pointer;"></label>
+                    <label class="fas fa-pen icon-pen text-primary" style="cursor:pointer;"></label>
                 </div>
             </div>
             <div class="add-task-item">

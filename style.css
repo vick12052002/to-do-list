@@ -54,6 +54,7 @@ header a:hover {
     margin-bottom: -4px;
 }
 
+
 .add-task-form {
     max-width: 100%;
     padding: 0 0;
@@ -61,6 +62,7 @@ header a:hover {
     background-color: #F2F2F2;
     border: 1px solid #C8C8C8;
     position: relative;
+    display: none;
 }
 
 .add-task-title {
