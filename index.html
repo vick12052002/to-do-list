@@ -133,9 +133,9 @@
                 stringJson = JSON.stringify(updateArray);
                 localStorage.setItem('item', stringJson);
                 $(item).find(".add-task-item, .add-task-save").hide()
-                // $(item).find(".icon-list").show();
-                $(item).children(".add-task-title").toggleClass("title-border").children(".icon-list").toggle();
-                $(item).find(".icon-pen").toggleClass("text-primary");
+                $(item).find(".icon-list").show();
+                $(item).children(".add-task-title").removeClass("title-border");
+                $(item).find(".icon-pen").removeClass("text-primary");
             })
         };
         $(document).ready(function () {
