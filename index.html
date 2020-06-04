@@ -75,6 +75,7 @@
         }
         function editItem(myId, item) {
             let arrayJson = JSON.parse(localStorage.getItem("item"));
+            let myIcon = arrayJson[myId].icon;
             if (item.hasClass("editing") !== true) {
                 $(item).addClass("editing").append(
                     `<div class="add-task-item flex-column ">
@@ -107,19 +108,35 @@
                 </div>
             </div>
             <div class="add-task-save row">
-                <button class="cancel" class="col-6 btn btn-light text-danger">NO &nbsp;Cancel</button>
-                <button class="save" class="col-6 btn btn-primary">+ &nbsp;Save</button>
+                <button class="cancel col-6 btn btn-light text-danger">NO &nbsp;Cancel</button>
+                <button  class="save col-6 btn btn-primary">+ &nbsp;Save</button>
             </div>`);
             }
             else {
                 $(item).children(".add-task-item , .add-task-save").toggle();
             };
-            // $("#save-task").on("click", function () {
-            //     var newArray = arrayJson.filter(id=>myId)
-            //     console.log(newArray);
-            // });
 
-            // 按儲存後,將原本的 item 切掉, push 更新版到 array ,在轉換成字串存進localStorege
+            $(document).on("click", ".save", function () {
+                var item = $(this).parents(".to-do-item");
+                var updateObj = {
+                    title: $(item).find("input[type='text']").val(),
+                    date: $(item).find("input[type='date']").val(),
+                    file: $(item).find("input[type='file']").get(0).files.length,
+                    comment: $(item).find("textarea").val(),
+                    id: myId,
+                    icon: myIcon,
+                };
+
+                let newArray = [];
+                newArray.push(updateObj);
+                var updateArray = arrayJson.map(obj => newArray.find(x => x.icon === obj.icon) || obj);
+                stringJson = JSON.stringify(updateArray);
+                localStorage.setItem('item', stringJson);
+                $(item).find(".add-task-item, .add-task-save").hide()
+                // $(item).find(".icon-list").show();
+                $(item).children(".add-task-title").toggleClass("title-border").children(".icon-list").toggle();
+                $(item).find(".icon-pen").toggleClass("text-primary");
+            })
         };
         $(document).ready(function () {
             $("button").click((e) => { e.preventDefault() });
@@ -129,11 +146,7 @@
                 $(".add-task-form").toggle()
             });
 
-<<<<<<< HEAD
-            $("#save-task").on("click", function () {
-=======
-            $(document).on("click","#save-task" ,function () {
->>>>>>> update reset() & icon-star color
+            $(document).on("click", "#save-task", function () {
                 var title = $("input[type='text']").val();
                 var date = $("input[type='date']").val();
                 var file = $("input[type='file']").get(0).files.length;
@@ -189,35 +202,24 @@
                     };
                     reset();
                 }
-
             });
             $("#cancel-task").click(() => {
                 $(".add-task-form").hide("slow");
             })
-            $(document).on("click",".icon-pen", function () {
+            $(document).on("click", ".icon-pen", function () {
                 var item = $(this).parents(".to-do-item");
-                var myId = item.attr('data-id');
-                console.log(myId);
+                var myId = item.attr("data-id");
                 editItem(myId, item);
-                $(item).children(".add-task-title").children(".icon-list").toggle();
+                $(item).children(".add-task-title").toggleClass("title-border").children(".icon-list").toggle();
                 $(this).toggleClass("text-primary");
                 $(this).parents(".add-task-form").children(".add-task-item ,.add-task-save").toggle();
-<<<<<<< HEAD
-            });
-
-            $(".icon-star").on("click", function () {
-                $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
-                $(this).parents(".add-task-title").toggleClass("star-bg");
-                $(this).parents(".add-task-title-icon").siblings(".add-task-title-input").children(".css-label").children(".title").toggleClass("title-color").toggleClass("star-bg");
-=======
             })
-            $(document).on("click",".icon-star" ,function () {
+            $(document).on("click", ".icon-star", function () {
                 $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
                 $(this).parents(".add-task-title").toggleClass("star-bg");
 
                 $(this).parents(".add-task-title-icon").siblings(".add-task-title-input").children(".css-label").children(".title-bg").toggleClass("star-bg");
 
->>>>>>> update reset() & icon-star color
             })
         });
     </script>
@@ -243,13 +245,8 @@
                 <div class="add-task-title-input col-10">
                     <input type="checkbox" name="checkbox" class="css-checkbox" />
                     <label for="" class="css-label ">
-<<<<<<< HEAD
-                        <input type="text" name="title" class="title title-color" id="title"
-                            placeholder="Type Something Here"></label>
-=======
                         <input type="text" name="title" class="title-bg" id="title"
-                                placeholder="Type Something Here"></label>
->>>>>>> update reset() & icon-star color
+                            placeholder="Type Something Here"></label>
                 </div>
                 <div class="add-task-title-icon col-2">
                     <label class="far fa-star icon-star" style="padding-right: 10px;cursor:pointer;"></label>
@@ -280,7 +277,7 @@
                     <label for="add-comment subtitle ">
                         <i class="far fa-comment-dots"></i>
                         <b>Comment</b>
-                    </label>
+                    </label>21
                     <br>
                     <textarea name="comment" class="form-control" cols="20" rows="3"
                         placeholder="Type your memo here..."></textarea>
