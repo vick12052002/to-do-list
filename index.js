@@ -198,14 +198,15 @@ $(document).ready(function () {
         dataObj["id"] = toDoList.length;
         var icon = "icon" + id;
         dataObj["icon"] = "icon" + id;
-        toDoList.push(dataObj);
-        stringJson = JSON.stringify(toDoList);
-        localStorage.setItem('all', stringJson);
 
         if (title.length == 0) {
             alert("type something")
+            return
         }
         else {
+            toDoList.push(dataObj);
+            stringJson = JSON.stringify(toDoList);
+            localStorage.setItem('all', stringJson);
             $(".to-do-list-item").append(
                 `<li class="to-do-item" data-id="${id}" >
                     <div class="add-task-title row ">
@@ -255,13 +256,17 @@ $(document).ready(function () {
             $(this).toggleClass("text-primary");
             $(this).parents(".add-task-form").children(".add-task-item ,.add-task-save").toggle();
         }
-
     })
     $(document).on("click", ".icon-star", function () {
-        $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
-        $(this).parents(".add-task-title").toggleClass("star-bg");
-
-        $(this).parents(".add-task-title-icon").siblings(".add-task-title-input").children(".css-label").children(".title-bg").toggleClass("star-bg");
+        if ($(this).parents("li").find(".title-bg").hasClass("done")) {
+            return
+        }
+        else {
+            $(this).parents("li").toggleClass("order");
+            $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
+            $(this).parents(".add-task-title").toggleClass("star-bg");
+            $(this).parents(".add-task-title-icon").siblings(".add-task-title-input").children(".css-label").children(".title-bg").toggleClass("star-bg");
+        }
 
     })
 
