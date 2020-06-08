@@ -121,7 +121,7 @@ function editItem(myId, item) {
         var updateArray = arrayJson.map(obj => newArray.find(x => x.icon === obj.icon) || obj);
         stringJson = JSON.stringify(updateArray);
         localStorage.setItem('all', stringJson);
-
+        nowHash();
         $(item).find(".add-task-item, .add-task-save").hide()
         $(item).find(".icon-list").show();
         $(item).children(".add-task-title").removeClass("title-border");
