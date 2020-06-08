@@ -141,7 +141,7 @@ header a:hover {
     padding-right: 10px;
 }
 
-.decoration {
+.done {
     text-decoration: line-through;
     color: gray;
 }
