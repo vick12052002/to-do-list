@@ -13,9 +13,9 @@ if (localStorage.getItem("all") === null) {
 else {
     var toDoList = JSON.parse(localStorage.getItem("all"));
 };
-function getlist() {
-    let arrayJson = JSON.parse(localStorage.getItem("all"));
-    if (arrayJson.length !== 0) {
+function getlist(arrayJson) {
+    $("ul").empty();
+    if (arrayJson !== 0) {
         for (var i = 0; i < arrayJson.length; i++) {
             getData = arrayJson[i];
             $(".to-do-list-item").append(`<li class="to-do-item" data-id="${getData['id']}" >
@@ -31,9 +31,9 @@ function getlist() {
                     <div class="icon-list col" id="${getData['icon']}" >
                     </div>
                 </div></li>`);
-            if(getData.status == "done"){
-                $(".css-checkbox").prop('checked', true);
-                $(".add-task-title-input").find(".title-bg").addClass("done")
+            if (getData.status == "done") {
+                $("ul .css-checkbox").prop('checked', true);
+                $("ul .add-task-title-input").find(".title-bg").addClass("done")
 
             }
             if (getData['date'] !== "") {
@@ -55,6 +55,7 @@ function getlist() {
         };
     }
 }
+
 function editItem(myId, item) {
     let arrayJson = JSON.parse(localStorage.getItem("all"));
     let myIcon = arrayJson[myId].icon;
@@ -120,6 +121,7 @@ function editItem(myId, item) {
         var updateArray = arrayJson.map(obj => newArray.find(x => x.icon === obj.icon) || obj);
         stringJson = JSON.stringify(updateArray);
         localStorage.setItem('all', stringJson);
+
         $(item).find(".add-task-item, .add-task-save").hide()
         $(item).find(".icon-list").show();
         $(item).children(".add-task-title").removeClass("title-border");
@@ -127,22 +129,27 @@ function editItem(myId, item) {
     })
 };
 $(window).on("hashchange", function () {
-    summer();
+    nowHash();
 })
-
-function summer() {
+// $(windows).click(nowHash());
+function nowHash() {
     let hash = window.location.hash;
-    let arrayJson = JSON.parse(localStorage.getItem("all"));
     if (hash == "#progress") {
-        arrayJson
+        var arrayJson = JSON.parse(localStorage.getItem("all")).filter(x => x.status !== "done");
+        $(".add-task").hide();
+        getlist(arrayJson)
     }
     else if (hash == "#completed") {
-        alert("complete")
+        var arrayJson = JSON.parse(localStorage.getItem("all")).filter(x => x.status == "done");
+        $(".add-task").hide();
+        getlist(arrayJson)
     }
-    else { alert("all"); }
-
+    else {
+        var arrayJson = JSON.parse(localStorage.getItem("all"));
+        $(".add-task").show();
+        getlist(arrayJson)
+    }
 };
-
 function statusItem() {
     let arrayJson = JSON.parse(localStorage.getItem("all"))
     $("li").each(function () {
@@ -153,7 +160,7 @@ function statusItem() {
                 }
             })
         }
-        else{
+        else {
             arrayJson.forEach((x) => {
                 if (x.id == $(this).attr("data-id")) {
                     x.status = ""
@@ -161,13 +168,12 @@ function statusItem() {
             })
         }
     })
-    console.log(arrayJson)
     stringJson = JSON.stringify(arrayJson);
     localStorage.setItem("all", stringJson)
 };
 $(document).ready(function () {
     $("button").click((e) => { e.preventDefault() });
-    getlist();
+    nowHash();
     $(".add-task-head").click(function () {
         $(".add-task-form").toggle()
     });
@@ -240,10 +246,16 @@ $(document).ready(function () {
     $(document).on("click", ".icon-pen", function () {
         var item = $(this).parents(".to-do-item");
         var myId = $(this).parents(".add-task-title").find(".css-checkbox").attr("id");
-        editItem(myId, item);
-        $(item).children(".add-task-title").toggleClass("title-border").children(".icon-list").toggle();
-        $(this).toggleClass("text-primary");
-        $(this).parents(".add-task-form").children(".add-task-item ,.add-task-save").toggle();
+        if ($(this).parents("li").find(".title-bg").hasClass("done")) {
+            return
+        }
+        else {
+            editItem(myId, item);
+            $(item).children(".add-task-title").toggleClass("title-border").children(".icon-list").toggle();
+            $(this).toggleClass("text-primary");
+            $(this).parents(".add-task-form").children(".add-task-item ,.add-task-save").toggle();
+        }
+
     })
     $(document).on("click", ".icon-star", function () {
         $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
