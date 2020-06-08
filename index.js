@@ -33,7 +33,7 @@ function getlist() {
                 </div></li>`);
             if(getData.status == "done"){
                 $(".css-checkbox").prop('checked', true);
-                $(".add-task-title-input").find(".title-bg").toggleClass("done")
+                $(".add-task-title-input").find(".title-bg").addClass("done")
 
             }
             if (getData['date'] !== "") {
