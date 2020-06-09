@@ -122,8 +122,8 @@ header a:hover {
 }
 
 .to-do-item {
-    margin: 24px auto 0;
-    max-width: 620px;
+    margin: 24px 0 0;
+    width: 100%;
     padding: 0 0;
     background-color: #F2F2F2;
     border-radius: 5px;
@@ -145,14 +145,12 @@ header a:hover {
     text-decoration: line-through;
     color: gray;
 }
-.order{
-    order: -1;
-}
 
 .to-do-list-item{
-    position: relative;
+    position: relative; ;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 input[type=checkbox].css-checkbox {

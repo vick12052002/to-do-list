@@ -32,10 +32,16 @@ function getlist(arrayJson) {
                     </div>
                 </div></li>`);
             if (getData.status == "done") {
-                $("ul .css-checkbox").prop('checked', true);
-                $("ul .add-task-title-input").find(".title-bg").addClass("done")
-
+                $("#" + getData['id']).prop('checked', true);
+                $("#" + getData['id']).parents(".add-task-title-input").find(".title-bg").addClass("done")
             }
+            if (getData['key'] !== "") {
+                var item = $("#" + getData['id']).parents(".to-do-item");
+                item.addClass("order-first");
+                item.find(".icon-star").removeClass("far").addClass("fas").addClass("text-warning");
+                item.find(".add-task-title").addClass("star-bg");
+                item.find(".add-task-title").find(".title-bg").addClass("star-bg");
+            };
             if (getData['date'] !== "") {
                 $("#" + getData['icon']).append(
                     `<i class="far fa-calendar-alt">
@@ -55,7 +61,6 @@ function getlist(arrayJson) {
         };
     }
 }
-
 function editItem(myId, item) {
     let arrayJson = JSON.parse(localStorage.getItem("all"));
     let myIcon = arrayJson[myId].icon;
@@ -130,8 +135,7 @@ function editItem(myId, item) {
 };
 $(window).on("hashchange", function () {
     nowHash();
-})
-// $(windows).click(nowHash());
+});
 function nowHash() {
     let hash = window.location.hash;
     if (hash == "#progress") {
@@ -149,6 +153,7 @@ function nowHash() {
         $(".add-task").show();
         getlist(arrayJson)
     }
+
 };
 function statusItem() {
     let arrayJson = JSON.parse(localStorage.getItem("all"))
@@ -193,6 +198,7 @@ $(document).ready(function () {
             file: file,
             comment: comment,
             status: "",
+            key: "",
         };
         var id = toDoList.length;
         dataObj["id"] = toDoList.length;
@@ -208,7 +214,7 @@ $(document).ready(function () {
             stringJson = JSON.stringify(toDoList);
             localStorage.setItem('all', stringJson);
             $(".to-do-list-item").append(
-                `<li class="to-do-item" data-id="${id}" >
+                `<li class="to-do-item " data-id="${id}" >
                     <div class="add-task-title row ">
                     <div class="add-task-title-input col-10">
                         <input type="checkbox" name="checkbox" class="css-checkbox" id="${id}"/>
@@ -258,14 +264,33 @@ $(document).ready(function () {
         }
     })
     $(document).on("click", ".icon-star", function () {
+        let arrayJson = JSON.parse(localStorage.getItem("all"))
         if ($(this).parents("li").find(".title-bg").hasClass("done")) {
             return
         }
         else {
-            $(this).parents("li").toggleClass("order");
+            $(this).parents("li").toggleClass("order-first");
             $(this).toggleClass("far").toggleClass("fas").toggleClass("text-warning");
-            $(this).parents(".add-task-title").toggleClass("star-bg");
-            $(this).parents(".add-task-title-icon").siblings(".add-task-title-input").children(".css-label").children(".title-bg").toggleClass("star-bg");
+            $(this).parents(".add-task-title").toggleClass("star-bg").find(".title-bg").toggleClass("star-bg");
+            $("li").each(function () {
+                if ($(this).find(".icon-star").hasClass("fas")) {
+                    arrayJson.forEach((x) => {
+                        if (x.id == $(this).attr("data-id")) {
+                            x.key = "star"
+                        }
+                    })
+                }
+                else {
+                    arrayJson.forEach((x) => {
+                        if (x.id == $(this).attr("data-id")) {
+                            x.key = ""
+                        }
+                    })
+                }
+                stringJson = JSON.stringify(arrayJson);
+                localStorage.setItem("all", stringJson)
+            })
+
         }
 
     })
